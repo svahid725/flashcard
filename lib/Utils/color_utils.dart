@@ -17,11 +17,3 @@ class DarkThemeColors {
 
 }
 
-enum CardsColor {
-  lightBlue,
-  lightYellow,
-  lightPurple,
-  white,
-  lightGreen,
-  lightPink
-}

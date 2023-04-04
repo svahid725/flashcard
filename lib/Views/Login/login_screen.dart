@@ -6,8 +6,8 @@ import 'package:getx_flashcard/Utils/routing_utils.dart';
 import 'package:getx_flashcard/Widgets/borderless_textfield.dart';
 import 'package:getx_flashcard/Widgets/my_elevated_button.dart';
 
-class SignScreen extends StatelessWidget {
-  SignScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  LoginScreen({Key? key}) : super(key: key);
   final LoginScreenController controller = Get.put(LoginScreenController());
 
   @override
@@ -16,7 +16,7 @@ class SignScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () => Get.toNamed(Routes.home.name),
           icon: const Icon(Icons.close),
         ),
       ),
@@ -26,7 +26,7 @@ class SignScreen extends StatelessWidget {
           child: Column(
             children: [
               const Text(
-                'Account',
+                'Login Account',
                 style: TextStyle(
                     fontSize: 39,
                     fontFamily: 'Satisfy',
@@ -48,7 +48,8 @@ class SignScreen extends StatelessWidget {
                 controller: controller.passwordController,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                },
                 child: Row(children: [
                   const Spacer(),
                   Text(
@@ -74,7 +75,10 @@ class SignScreen extends StatelessWidget {
                         .apply(color: DarkThemeColors.secondaryTextColor),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(Routes.register.name);
+
+                    },
                     child: const Text(
                       'Create Account',
                       style: TextStyle(color: Colors.white),
@@ -121,7 +125,8 @@ class SignScreen extends StatelessWidget {
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: const MaterialStatePropertyAll(Colors.white),
+                    backgroundColor:
+                        const MaterialStatePropertyAll(Colors.white),
                     shape: MaterialStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28),

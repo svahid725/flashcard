@@ -2,11 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:getx_flashcard/Controllers/AddNewFlashcard/add_new_flashcard_controller.dart';
 import 'package:getx_flashcard/Controllers/Home/home_controller.dart';
-import 'package:getx_flashcard/Models/Home/english_data_model.dart';
-import 'package:getx_flashcard/Models/Home/persian_data_model.dart';
+import 'package:getx_flashcard/Models/FlashCard/english_data_model.dart';
+import 'package:getx_flashcard/Models/FlashCard/persian_data_model.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
+import 'package:getx_flashcard/Utils/routing_utils.dart';
 import 'package:getx_flashcard/Widgets/my_appbar.dart';
 
 class Home extends StatelessWidget {
@@ -74,7 +74,10 @@ class Home extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.only(right: 0, bottom: 10),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.back();
+                                    Get.toNamed(Routes.test.name);
+                                  },
                                   child: Text(
                                     'Start',
                                     style: Get.theme.textTheme.bodyText2!
@@ -97,7 +100,9 @@ class Home extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 12),
               height: 60,
+              //Get.height/14,
               width: 60,
+              //Get.height/14,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: const Color(0xff2a2a2a).withOpacity(0.8),
@@ -118,16 +123,15 @@ class Home extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: CarouselSlider.builder(
               options: CarouselOptions(
                 padEnds: false,
-                // pageSnapping: false ,
                 onPageChanged: null,
                 enlargeStrategy: CenterPageEnlargeStrategy.scale,
                 disableCenter: true,
-                height: 600,
-                viewportFraction: 0.35,
+                height: Get.height/1.32,
+                viewportFraction: 0.31,
                 initialPage: 0,
                 enableInfiniteScroll: false,
                 animateToClosest: true,
@@ -157,12 +161,11 @@ class Home extends StatelessWidget {
 }
 
 class FlashCardItem extends StatelessWidget {
-  const FlashCardItem(
-      {Key? key,
-      required this.controller,
-      required this.index,
-      })
-      : super(key: key);
+  const FlashCardItem({
+    Key? key,
+    required this.controller,
+    required this.index,
+  }) : super(key: key);
   final HomeController controller;
   final int index;
 
@@ -172,15 +175,16 @@ class FlashCardItem extends StatelessWidget {
       init: controller,
       builder: (controller) {
         return Container(
-          height: Get.height/4, //200
-          margin: const EdgeInsets.only(bottom: 24),
+          height: Get.height / 4, //200
+          margin: EdgeInsets.symmetric(vertical: Get.height / 80),
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
                     CardsDataInEnglishLanguage.data[index].color.withOpacity(1),
-                    CardsDataInEnglishLanguage.data[index].color.withOpacity(0.9),
+                    CardsDataInEnglishLanguage.data[index].color
+                        .withOpacity(0.9),
                     CardsDataInEnglishLanguage.data[index].color.withOpacity(1),
                   ]),
               borderRadius: BorderRadius.circular(16)),
@@ -211,8 +215,8 @@ class FlashCardItem extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: Get.height / 36,
                 ),
                 Text(
                   controller.isEnglish.isTrue
@@ -234,9 +238,9 @@ class FlashCardItem extends StatelessWidget {
 }
 
 List phraseItemsList(int index) {
-  final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data ;
-  final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data ;
-  final List flashCardsPhraseList = [] ;
+  final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data;
+  final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data;
+  final List flashCardsPhraseList = [];
   for (int items = 0; items < english.length; items++) {
     flashCardsPhraseList.add(english[items].phrase);
   }
@@ -245,7 +249,7 @@ List phraseItemsList(int index) {
 }
 
 List meaningItemsList(int index) {
-  final AddNewFlashCardController controller = Get.find();
+  final HomeController controller = Get.find();
   final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data;
   final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data;
   final List flashCardsMeaningList = [];
@@ -254,5 +258,4 @@ List meaningItemsList(int index) {
   }
   flashCardsMeaningList[index] = farsi[index].meaning;
   return flashCardsMeaningList;
-
 }

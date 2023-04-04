@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:getx_flashcard/Models/Home/english_data_model.dart';
 
 class AddNewFlashCardController extends GetxController{
   final RxBool isExpanded = false.obs;
@@ -9,6 +8,6 @@ class AddNewFlashCardController extends GetxController{
   late  Color color ;
   final TextEditingController wordController = TextEditingController();
   final TextEditingController translateController = TextEditingController();
-  // late final EnglishCardsDataEntity newItem ;
-
+  final TextEditingController exampleController = TextEditingController();
+  final TextEditingController exampleTranslationController = TextEditingController();
 }

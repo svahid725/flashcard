@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_flashcard/Controllers/AddNewFlashcard/add_new_flashcard_controller.dart';
-import 'package:getx_flashcard/Models/Home/english_data_model.dart';
-import 'package:getx_flashcard/Models/Home/persian_data_model.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
 import 'package:getx_flashcard/Utils/routing_utils.dart';
+import 'package:getx_flashcard/Widgets/borderless_textfield.dart';
+import 'package:getx_flashcard/Widgets/my_elevated_button.dart';
 
 class AddNewFlashCardScreen extends StatelessWidget {
   AddNewFlashCardScreen({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class AddNewFlashCardScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,37 +41,17 @@ class AddNewFlashCardScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: Get.height / 20),
-              TextField(
+              BorderLessInput(
+                label: 'English word',
                 controller: controller.wordController,
-                decoration: const InputDecoration(
-                  label: Text(
-                    'English word',
-                    style: TextStyle(color: DarkThemeColors.secondaryTextColor),
-                  ),
-                ),
               ),
               SizedBox(height: Get.height / 20),
-              TextField(
+              BorderLessInput(
+                label: 'Translation',
                 controller: controller.translateController,
-                decoration: const InputDecoration(
-                  label: Text(
-                    'Translation',
-                    style: TextStyle(color: DarkThemeColors.secondaryTextColor),
-                  ),
-                ),
               ),
               SizedBox(height: Get.height / 20),
-              SizedBox(
-                height: Get.height / 2,
-                child: SingleChildScrollView(
-                  child:  GetBuilder(
-                    init: controller,
-                    builder: (controller) {
-                      return MoreItems(controller: controller);
-                    },
-                  ),
-                ),
-              ),
+              MoreItems(controller: controller),
               SizedBox(height: Get.height / 24),
             ],
           ),
@@ -91,41 +71,24 @@ class MoreItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextButton(
-          onPressed: () {
-            controller.isExpanded.value == false
-                ? controller.isExpanded.value = true
-                : controller.isExpanded.value = false;
-            controller.update();
-          },
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            child: controller.isExpanded.value == false
-                ? Row(
-                    children: const [
-                      Icon(
-                        Icons.arrow_drop_down_circle_outlined,
-                        color: DarkThemeColors.alertDialogTitleColor,
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        'More Items',
-                        style: TextStyle(
-                          color: DarkThemeColors.alertDialogTitleColor,
-                        ),
-                      ),
-                    ],
-                  )
-                : Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+    return GetBuilder(
+      init: controller,
+      builder: (controller) {
+        return Column(children: [
+          TextButton(
+            onPressed: () {
+              controller.isExpanded.value == false
+                  ? controller.isExpanded.value = true
+                  : controller.isExpanded.value = false;
+              controller.update();
+            },
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: controller.isExpanded.value == false
+                  ? Row(
                       children: const [
                         Icon(
-                          Icons.arrow_circle_up,
+                          Icons.arrow_drop_down_circle_outlined,
                           color: DarkThemeColors.alertDialogTitleColor,
                         ),
                         SizedBox(
@@ -138,112 +101,87 @@ class MoreItems extends StatelessWidget {
                           ),
                         ),
                       ],
+                    )
+                  : Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: const [
+                          Icon(
+                            Icons.arrow_circle_up,
+                            color: DarkThemeColors.alertDialogTitleColor,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            'More Items',
+                            style: TextStyle(
+                              color: DarkThemeColors.alertDialogTitleColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+            ),
           ),
-        ),
-        AnimatedSwitcher(
-          duration: controller.isExpanded.isTrue
-              ? const Duration(milliseconds: 100)
-              : const Duration(milliseconds: 200),
-          transitionBuilder: AnimatedSwitcher.defaultTransitionBuilder,
-          child: controller.isExpanded.isTrue
-              ? Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          AnimatedSwitcher(
+            duration: controller.isExpanded.isTrue
+                ? const Duration(milliseconds: 100)
+                : const Duration(milliseconds: 200),
+            transitionBuilder: AnimatedSwitcher.defaultTransitionBuilder,
+            child: controller.isExpanded.isTrue
+                ? Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BorderLessInput(
+                            label: 'Example',
+                            controller: controller.exampleController),
+                        SizedBox(
+                          height: Get.height / 42,
+                        ),
+                        BorderLessInput(
+                            label: 'Translation',
+                            controller:
+                                controller.exampleTranslationController),
+                        SizedBox(
+                          height: Get.height / 20,
+                        ),
+                        Text(
+                          'Flashcard Color',
+                          style: Get.textTheme.bodyText1!.copyWith(
+                              color: DarkThemeColors.secondaryTextColor),
+                        ),
+                        SizedBox(
+                          height: Get.height / 40,
+                        ),
+                        ColorChooserItem(),
+                        SizedBox(
+                          height: Get.height / 16,
+                        ),
+                        MyElevatedButton(
+                          buttonLabel: 'CREATE',
+                          onTap: () => Get.toNamed(Routes.home.name),
+                        )
+                      ],
+                    ),
+                  )
+                : Column(
                     children: [
-                      const TextField(
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Example',
-                            style: TextStyle(
-                                color: DarkThemeColors.secondaryTextColor),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height / 42,
-                      ),
-                      const TextField(
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Translation',
-                            style: TextStyle(
-                                color: DarkThemeColors.secondaryTextColor),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height / 20,
-                      ),
-                      Text(
-                        'Flashcard Color',
-                        style: Get.textTheme.bodyText1!.copyWith(
-                            color: DarkThemeColors.secondaryTextColor),
-                      ),
-                      SizedBox(
-                        height: Get.height / 40,
-                      ),
-                      ColorChooserItem(),
                       SizedBox(
                         height: Get.height / 16,
                       ),
-                      SizedBox(
-                        height: Get.height / 18,
-                        width: Get.width - 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Get.toNamed(Routes.home.name);
-                            if (controller.wordController.text.isNotEmpty && controller.translateController.text.isNotEmpty){
-                              final EnglishCardsDataEntity newCard = EnglishCardsDataEntity(phrase: controller.wordController.text,
-                                  meaning: controller.translateController.text,
-                                  color: controller.color);
-
-                            }
-                          },
-                          style: ButtonStyle(
-                            shape: MaterialStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
-                              ),
-                            ),
-                            backgroundColor: const MaterialStatePropertyAll(
-                                DarkThemeColors.surfaceColor),
-                          ),
-                          child: const Text('CREATE'),
+                      MyElevatedButton(
+                        buttonLabel: 'CREATE',
+                        onTap: () => Get.toNamed(
+                          Routes.home.name,
                         ),
                       )
                     ],
                   ),
-                )
-              : Column(
-                  children: [
-                    SizedBox(
-                      height: Get.height / 16,
-                    ),
-                    SizedBox(
-                      height: Get.height / 18,
-                      width: Get.width - 48,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.toNamed(Routes.home.name);
-                        },
-                        style: ButtonStyle(
-                          shape: MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28),
-                            ),
-                          ),
-                          backgroundColor: const MaterialStatePropertyAll(
-                              DarkThemeColors.surfaceColor),
-                        ),
-                        child: const Text('CREATE'),
-                      ),
-                    )
-                  ],
-                ),
-        ),
-      ],
+          ),
+        ]);
+      },
     );
   }
 }

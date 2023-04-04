@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:getx_flashcard/Models/Home/translate.dart';
+import 'package:getx_flashcard/Models/FlashCard/translate.dart';
 import 'package:getx_flashcard/Utils/routing_utils.dart';
 import 'package:getx_flashcard/Views/Splash/splash_screen.dart';
 
@@ -25,7 +25,9 @@ void main() {
         Routes.home,
         Routes.personal,
         Routes.addNew,
-        Routes.sign
+        Routes.login,
+        Routes.test,
+        Routes.register
       ],
       translations: Translate(),
       initialRoute: Routes.splash.name,

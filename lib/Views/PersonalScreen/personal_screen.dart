@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_flashcard/Models/Home/english_data_model.dart';
-import 'package:getx_flashcard/Models/Home/persian_data_model.dart';
+import 'package:getx_flashcard/Models/FlashCard/english_data_model.dart';
+import 'package:getx_flashcard/Models/FlashCard/persian_data_model.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
 
 
@@ -26,7 +26,10 @@ class PersonalScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: AppBar(
                   leading: InkWell(
-                    onTap: () => Get.back(),
+                    onTap: () {
+                      Get.back();
+                 //     Get.toNamed(Home)
+                    },
                     child: const Icon(
                       Icons.arrow_back,
                       color: DarkThemeColors.onBackground,

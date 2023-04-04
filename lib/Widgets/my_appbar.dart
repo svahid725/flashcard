@@ -73,7 +73,7 @@ class MyAppBar extends StatelessWidget {
           onSelected: (value) {
             switch (value) {
               case 1:
-                Get.toNamed(Routes.sign.name);
+                Get.toNamed(Routes.login.name);
                 break;
               case 2:
                 Get.defaultDialog(
@@ -192,9 +192,6 @@ class MyAppBar extends StatelessWidget {
           },
           itemBuilder: (context) {
             return const [
-              PopupMenuItem(
-                child: Text('Learning mode'),
-              ),
               PopupMenuItem(
                 value: 1,
                 child: Text(

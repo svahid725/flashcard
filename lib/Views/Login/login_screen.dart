@@ -15,10 +15,10 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Get.toNamed(Routes.home.name),
-          icon: const Icon(Icons.close),
-        ),
+        // leading: IconButton(
+        //   onPressed: () => Get.toNamed(Routes.home.name),
+        //   icon: const Icon(Icons.close),
+        // ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               const Text(
-                'Login Account',
+                'Login',
                 style: TextStyle(
                     fontSize: 39,
                     fontFamily: 'Satisfy',
@@ -38,6 +38,7 @@ class LoginScreen extends StatelessWidget {
               BorderLessInput(
                 label: 'Email',
                 controller: controller.emailController,
+                focusNode: controller.emailFocusNode,
               ),
               SizedBox(
                 height: Get.height / 20,
@@ -46,9 +47,12 @@ class LoginScreen extends StatelessWidget {
                 label: 'Password',
                 isPassword: true,
                 controller: controller.passwordController,
+                focusNode: controller.passwordFocusNode,
               ),
               TextButton(
                 onPressed: () {
+                  controller.forgotPassword();
+                  Get.offAndToNamed(Routes.register.name);
                 },
                 child: Row(children: [
                   const Spacer(),
@@ -64,7 +68,10 @@ class LoginScreen extends StatelessWidget {
               ),
               MyElevatedButton(
                 buttonLabel: 'FINISH',
-                onTap: () {},
+                onTap: () {
+                  controller.login();
+                  controller.close();
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +84,6 @@ class LoginScreen extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Get.toNamed(Routes.register.name);
-
                     },
                     child: const Text(
                       'Create Account',

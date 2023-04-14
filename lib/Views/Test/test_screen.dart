@@ -380,11 +380,12 @@ class FlashCardItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(16)),
           child: InkWell(
             onTap: () {
-              controller.translateIndex.value = index;
-              controller.flashCardsPhraseList.value =
-                  phraseItemsList(controller.translateIndex.value);
-              controller.flashCardsMeaningList.value =
-                  meaningItemsList(controller.translateIndex.value);
+
+              // controller.translateIndex.value = index;
+              // controller.flashCardsPhraseList.value =
+              //     phraseItemsList(controller.translateIndex.value);
+              // controller.flashCardsMeaningList.value =
+              //     meaningItemsList(controller.translateIndex.value);
               controller.isEnglish.isTrue
                   ? controller.changeLanguage('per')
                   : controller.changeLanguage('eng');
@@ -396,9 +397,10 @@ class FlashCardItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  controller.isEnglish.isTrue
-                      ? CardsDataInEnglishLanguage.data[index].phrase
-                      : controller.flashCardsPhraseList[index].toString(),
+                  'aaaa',
+                  // controller.isEnglish.isTrue
+                  //     ? CardsDataInEnglishLanguage.data[index].phrase
+                  //     : controller.flashCardsPhraseList[index].toString(),
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 29,
@@ -409,9 +411,10 @@ class FlashCardItem extends StatelessWidget {
                   height: Get.height / 36,
                 ),
                 Text(
-                  controller.isEnglish.isTrue
-                      ? CardsDataInEnglishLanguage.data[index].meaning
-                      : controller.flashCardsMeaningList[index].toString(),
+                  'sss',
+                  // controller.isEnglish.isTrue
+                  // ? CardsDataInEnglishLanguage.data[index].meaning
+                  // : controller.flashCardsMeaningList[index].toString(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.black,
@@ -428,24 +431,24 @@ class FlashCardItem extends StatelessWidget {
 }
 
 List phraseItemsList(int index) {
-  final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data;
-  final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data;
+  // final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data;
+  // final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data;
   final List flashCardsPhraseList = [];
-  for (int items = 0; items < english.length; items++) {
-    flashCardsPhraseList.add(english[items].phrase);
-  }
-  flashCardsPhraseList[index] = farsi[index].phrase;
+  // for (int items = 0; items < english.length; items++) {
+  //   flashCardsPhraseList.add(english[items].phrase);
+  // }
+  // flashCardsPhraseList[index] = farsi[index].phrase;
   return flashCardsPhraseList;
 }
 
 List meaningItemsList(int index) {
-  final HomeController controller = Get.find();
-  final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data;
-  final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data;
+  // final HomeController controller = Get.find();
+  // final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data;
+  // final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data;
   final List flashCardsMeaningList = [];
-  for (int items = 0; items < english.length; items++) {
-    flashCardsMeaningList.add(english[items].meaning);
-  }
-  flashCardsMeaningList[index] = farsi[index].meaning;
+  // for (int items = 0; items < english.length; items++) {
+  //   flashCardsMeaningList.add(english[items].meaning);
+  // }
+  // flashCardsMeaningList[index] = farsi[index].meaning;
   return flashCardsMeaningList;
 }

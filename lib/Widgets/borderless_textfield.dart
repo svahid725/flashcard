@@ -5,16 +5,20 @@ import 'package:getx_flashcard/Controllers/Register/register_controller.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
 
 class BorderLessInput extends StatelessWidget {
-   const BorderLessInput({
+  const BorderLessInput({
     required this.label,
     required this.controller,
+    this.focusNode,
     this.isPassword = false,
     this.onChanged,
+    this.maxLength,
     Key? key,
   }) : super(key: key);
   final String label;
   final TextEditingController controller;
   final bool isPassword;
+  final int? maxLength;
+  final FocusNode? focusNode;
   final Function(String)? onChanged;
 
   @override
@@ -22,9 +26,9 @@ class BorderLessInput extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: isPassword,
-      onChanged: (value) => {
-        onChanged
-      },
+      focusNode: focusNode,
+      maxLength: maxLength,
+      onChanged: (value) => {onChanged},
       decoration: InputDecoration(
         label: Text(
           label,

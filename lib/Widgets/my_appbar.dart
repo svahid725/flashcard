@@ -73,7 +73,7 @@ class MyAppBar extends StatelessWidget {
           onSelected: (value) {
             switch (value) {
               case 1:
-                Get.toNamed(Routes.login.name);
+                Get.toNamed(Routes.personal.name);
                 break;
               case 2:
                 Get.defaultDialog(
@@ -215,13 +215,18 @@ class MyAppBar extends StatelessWidget {
           },
         )
       ],
-      leading: IconButton(
-        onPressed: () {
-          Get.to(
-            AddNewFlashCardScreen(),
-          );
-        },
-        icon: const Icon(Icons.add, color: DarkThemeColors.onBackground),
+      leading: Obx(
+        () => controller.isStudent.isFalse
+            ? IconButton(
+                onPressed: () {
+                  Get.to(
+                    AddNewFlashCardScreen(),
+                  );
+                },
+                icon:
+                    const Icon(Icons.add, color: DarkThemeColors.onBackground),
+              )
+            : Container(),
       ),
     );
   }

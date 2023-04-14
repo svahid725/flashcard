@@ -27,7 +27,8 @@ void main() {
         Routes.addNew,
         Routes.login,
         Routes.test,
-        Routes.register
+        Routes.register,
+        Routes.userInfo
       ],
       translations: Translate(),
       initialRoute: Routes.splash.name,

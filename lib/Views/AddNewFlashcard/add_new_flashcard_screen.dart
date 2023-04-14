@@ -43,12 +43,12 @@ class AddNewFlashCardScreen extends StatelessWidget {
               SizedBox(height: Get.height / 20),
               BorderLessInput(
                 label: 'English word',
-                controller: controller.wordController,
+                controller: controller.questionTitleController,
               ),
               SizedBox(height: Get.height / 20),
               BorderLessInput(
                 label: 'Translation',
-                controller: controller.translateController,
+                controller: controller.questionController,
               ),
               SizedBox(height: Get.height / 20),
               MoreItems(controller: controller),
@@ -136,14 +136,13 @@ class MoreItems extends StatelessWidget {
                       children: [
                         BorderLessInput(
                             label: 'Example',
-                            controller: controller.exampleController),
+                            controller: controller.answerTitleController),
                         SizedBox(
                           height: Get.height / 42,
                         ),
                         BorderLessInput(
                             label: 'Translation',
-                            controller:
-                                controller.exampleTranslationController),
+                            controller: controller.answerController),
                         SizedBox(
                           height: Get.height / 20,
                         ),
@@ -161,7 +160,11 @@ class MoreItems extends StatelessWidget {
                         ),
                         MyElevatedButton(
                           buttonLabel: 'CREATE',
-                          onTap: () => Get.toNamed(Routes.home.name),
+                          onTap: () {
+                            bool check = false;
+                            check = controller.textFiledsCheck();
+                            if(check) controller.addNewFlashCard();
+                          },
                         )
                       ],
                     ),
@@ -173,9 +176,11 @@ class MoreItems extends StatelessWidget {
                       ),
                       MyElevatedButton(
                         buttonLabel: 'CREATE',
-                        onTap: () => Get.toNamed(
-                          Routes.home.name,
-                        ),
+                        onTap: () {
+                          bool check = false ;
+                          check = controller.textFiledsCheck();
+                          if(check) controller.addNewFlashCard();
+                        },
                       )
                     ],
                   ),

@@ -10,7 +10,7 @@ class AuthApi {
   }) async {
     return RequestsUtil.instance.makeRequest(
       webController: WebControllers.auth,
-      webMethod: 'init',
+      webMethod: WebMethods.init,
       postRequest: true,
       body: {'email': email},
     );
@@ -140,15 +140,15 @@ class AuthApi {
   Future<ApiResult> updateProfile({
     required String firstName,
     required String lastName,
-    required String fullName,
+    required String? fullName,
     required String mobile,
-    required String avatar,
+    required String? avatar,
     required String email,
     required String? studyField,
     required String? studyDegree,
-    required int credit,
-    required String birthdate,
-    required String gender,
+    required int? credit,
+    required String? birthdate,
+    required String? gender,
     required String type,
   }) async {
     return RequestsUtil.instance.makeRequest(

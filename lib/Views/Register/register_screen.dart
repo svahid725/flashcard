@@ -19,7 +19,10 @@ class RegisterScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () {
+            controller.close();
+            Get.back();
+          },
           icon: const Icon(Icons.close),
         ),
       ),
@@ -38,11 +41,10 @@ class RegisterScreen extends StatelessWidget {
               SizedBox(
                 height: Get.height / 20,
               ),
-              SizedBox(
-                height: Get.height / 20,
-              ),
               BorderLessInput(
-                  label: 'Email', controller: controller.emailController),
+                  label: 'Email',
+                  focusNode: controller.emailFocusNode,
+                  controller: controller.emailController),
               Obx(
                 () => controller.codeSent.isTrue
                     ? SizedBox(
@@ -56,25 +58,34 @@ class RegisterScreen extends StatelessWidget {
                         children: [
                           BorderLessInput(
                               label: 'Code',
-                              onChanged: (value) {
-                                print(
-                                    'code text length${controller.codeController.text}');
-                              },
+                              focusNode: controller.codeFocusNode,
+                              maxLength: 4,
                               controller: controller.codeController),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  controller.setTimer();
+                                },
                                 child: Text(
                                   'Resend',
                                   style: Get.textTheme.bodyText1!.copyWith(
                                       color:
-                                          DarkThemeColors.alertDialogTitleColor,
+                                          controller.sendAgainTimer.value == 0
+                                              ? DarkThemeColors
+                                                  .alertDialogTitleColor
+                                              : DarkThemeColors
+                                                  .secondaryTextColor,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              Text(controller.sendAgainTimer.value.toString())
+                              Text(
+                                controller.sendAgainTimer.value == 0
+                                    ? ''
+                                    : controller.sendAgainTimer.value
+                                        .toString(),
+                              )
                             ],
                           )
                         ],
@@ -87,28 +98,51 @@ class RegisterScreen extends StatelessWidget {
               GetBuilder(
                 init: controller,
                 builder: (controller) {
-                  return MyElevatedButton(
-                    buttonLabel: controller.codeSent.value == false
-                        ? 'SEND CODE'
-                        : controller.codeController.text.length == 4
-                            ? 'CONFIRM'
-                            : 'ENTER CODE',
-                    onTap: () {
-                      if (controller.codeSent.value == false) {
-                        Get.defaultDialog(
-                          title: '',
-                          middleText: 'Confirmation code sent to your email.',
-                          middleTextStyle: Get.textTheme.bodyText1!.copyWith(
-                            color: DarkThemeColors.alertDialogTitleColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
+                  return controller.codeSent.isFalse
+                      ? MyElevatedButton(
+                          buttonLabel: 'SEND CODE',
+                          onTap: () {
+                            if (controller.emailController.text.isNotEmpty) {
+                              if (controller.codeSent.value == false) {
+                                Get.defaultDialog(
+                                  middleText:
+                                      'Confirmation code sent to your email.',
+                                  title: '',
+                                  cancel: TextButton(
+                                    onPressed: () => Get.back(),
+                                    child: Text(
+                                      'OK',
+                                      style: Get.textTheme.bodyText1!.copyWith(
+                                          color: DarkThemeColors
+                                              .alertDialogTitleColor,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  middleTextStyle:
+                                      Get.textTheme.bodyText1!.copyWith(
+                                    color:
+                                        DarkThemeColors.alertDialogTitleColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                );
+                              }
+                              controller.codeSent.value = true;
+                              controller.update();
+                              controller.setTimer();
+                              controller.start();
+                              controller.submit();
+                            } else {
+                              Get.snackbar('Error', 'Please enter your email');
+                            }
+                          },
+                        )
+                      : MyElevatedButton(
+                          buttonLabel: 'CONFIRM',
+                          onTap: () {
+                            controller.register();
+                          },
                         );
-                      }
-                      controller.codeSent.value = true;
-                      controller.setTimer();
-                    },
-                  );
                 },
               ),
               SizedBox(
@@ -145,9 +179,11 @@ class RegisterScreen extends StatelessWidget {
                 width: Get.width - 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    Future.delayed(const Duration(seconds: 1)).then(
-                      (value) => Get.offAndToNamed(Routes.personal.name),
-                    );
+
+                    // Future.delayed(const Duration(seconds: 1)).then(
+                    //   (value) => Get.offAndToNamed(Routes.personal.name),
+                    // );
+                    Get.offAndToNamed(Routes.userInfo.name);
                   },
                   style: ButtonStyle(
                     backgroundColor:

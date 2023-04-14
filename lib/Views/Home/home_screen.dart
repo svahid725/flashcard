@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:getx_flashcard/Controllers/Home/home_controller.dart';
-import 'package:getx_flashcard/Models/FlashCard/english_data_model.dart';
-import 'package:getx_flashcard/Models/FlashCard/persian_data_model.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
 import 'package:getx_flashcard/Utils/routing_utils.dart';
 import 'package:getx_flashcard/Widgets/my_appbar.dart';
@@ -124,34 +122,38 @@ class Home extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-            child: CarouselSlider.builder(
-              options: CarouselOptions(
-                padEnds: false,
-                onPageChanged: null,
-                enlargeStrategy: CenterPageEnlargeStrategy.scale,
-                disableCenter: true,
-                height: Get.height/1.32,
-                viewportFraction: 0.31,
-                initialPage: 0,
-                enableInfiniteScroll: false,
-                animateToClosest: true,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: false,
-                scrollDirection: Axis.vertical,
-              ),
-              itemCount: CardsDataInEnglishLanguage.data.length,
-              itemBuilder: (context, index, realIndex) {
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  child: FlipAnimation(
-                    duration: const Duration(milliseconds: 250),
-                    child: FlashCardItem(
-                      controller: controller,
-                      index: index,
+            child: Obx(
+              () => controller.isLoading.isTrue
+                  ? const Center(child: CircularProgressIndicator())
+                  : CarouselSlider.builder(
+                      options: CarouselOptions(
+                        padEnds: false,
+                        onPageChanged: null,
+                        enlargeStrategy: CenterPageEnlargeStrategy.scale,
+                        disableCenter: true,
+                        height: Get.height / 1.32,
+                        viewportFraction: 0.31,
+                        initialPage: 0,
+                        enableInfiniteScroll: false,
+                        animateToClosest: true,
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: false,
+                        scrollDirection: Axis.vertical,
+                      ),
+                      itemCount: controller.flashCardDataModel.length,
+                      itemBuilder: (context, index, realIndex) {
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          child: FlipAnimation(
+                            duration: const Duration(milliseconds: 250),
+                            child: FlashCardItem(
+                              controller: controller,
+                              index: index,
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                );
-              },
             ),
           ),
         ),
@@ -179,53 +181,57 @@ class FlashCardItem extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: Get.height / 80),
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    CardsDataInEnglishLanguage.data[index].color.withOpacity(1),
-                    CardsDataInEnglishLanguage.data[index].color
-                        .withOpacity(0.9),
-                    CardsDataInEnglishLanguage.data[index].color.withOpacity(1),
-                  ]),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  DarkThemeColors.surfaceColor,
+                  DarkThemeColors.surfaceColor.withOpacity(0.9),
+                  DarkThemeColors.surfaceColor,
+                ],
+              ),
               borderRadius: BorderRadius.circular(16)),
           child: InkWell(
             onTap: () {
               controller.translateIndex.value = index;
-              controller.flashCardsPhraseList.value =
-                  phraseItemsList(controller.translateIndex.value);
-              controller.flashCardsMeaningList.value =
-                  meaningItemsList(controller.translateIndex.value);
               controller.isEnglish.isTrue
                   ? controller.changeLanguage('per')
                   : controller.changeLanguage('eng');
               controller.isEnglish.isTrue
                   ? controller.isEnglish.value = false
                   : controller.isEnglish.value = true;
+              controller.getFlashCards();
+
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  controller.isEnglish.isTrue
-                      ? CardsDataInEnglishLanguage.data[index].phrase
-                      : controller.flashCardsPhraseList[index].toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 29,
-                    fontWeight: FontWeight.w600,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    controller.isEnglish.isTrue
+                        ? controller.flashCardDataModel[index].questionTitle
+                        : controller.questionTitlesList[index],
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 29,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: Get.height / 36,
                 ),
-                Text(
-                  controller.isEnglish.isTrue
-                      ? CardsDataInEnglishLanguage.data[index].meaning
-                      : controller.flashCardsMeaningList[index].toString(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    controller.isEnglish.isTrue
+                        ? controller.flashCardDataModel[index].question
+                        : controller.questionList[index].toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
                   ),
                 )
               ],
@@ -235,27 +241,4 @@ class FlashCardItem extends StatelessWidget {
       },
     );
   }
-}
-
-List phraseItemsList(int index) {
-  final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data;
-  final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data;
-  final List flashCardsPhraseList = [];
-  for (int items = 0; items < english.length; items++) {
-    flashCardsPhraseList.add(english[items].phrase);
-  }
-  flashCardsPhraseList[index] = farsi[index].phrase;
-  return flashCardsPhraseList;
-}
-
-List meaningItemsList(int index) {
-  final HomeController controller = Get.find();
-  final List<EnglishCardsDataEntity> english = CardsDataInEnglishLanguage.data;
-  final List<PersianCardsDataEntity> farsi = CardsDataInPersian.data;
-  final List flashCardsMeaningList = [];
-  for (int items = 0; items < english.length; items++) {
-    flashCardsMeaningList.add(english[items].meaning);
-  }
-  flashCardsMeaningList[index] = farsi[index].meaning;
-  return flashCardsMeaningList;
 }

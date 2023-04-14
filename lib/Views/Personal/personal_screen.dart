@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_flashcard/Controllers/Home/home_controller.dart';
 import 'package:getx_flashcard/Models/FlashCard/english_data_model.dart';
 import 'package:getx_flashcard/Models/FlashCard/persian_data_model.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
-
+import 'package:getx_flashcard/Views/AddNewFlashcard/add_new_flashcard_screen.dart';
 
 class PersonalScreen extends StatelessWidget {
-  const PersonalScreen({Key? key}) : super(key: key);
-
+  PersonalScreen({Key? key}) : super(key: key);
+  final HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,7 +29,7 @@ class PersonalScreen extends StatelessWidget {
                   leading: InkWell(
                     onTap: () {
                       Get.back();
-                 //     Get.toNamed(Home)
+                      //     Get.toNamed(Home)
                     },
                     child: const Icon(
                       Icons.arrow_back,
@@ -64,11 +65,18 @@ class PersonalScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  actions: const [
-                    Padding(
-                      padding: EdgeInsets.only(right: 16),
-                      child: Icon(Icons.add),
-                    )
+                  actions: [
+                    homeController.isStudent.isFalse
+                        ? IconButton(
+                            onPressed: () {
+                              Get.to(
+                                AddNewFlashCardScreen(),
+                              );
+                            },
+                            icon: const Icon(Icons.add,
+                                color: DarkThemeColors.onBackground),
+                          )
+                        : Container(),
                   ],
                   elevation: 0,
                   flexibleSpace: Container(

@@ -13,12 +13,12 @@ class LoginScreenController extends GetxController {
   final RxBool isLogin = false.obs;
   final RxBool isRegister = false.obs;
   final RxBool canSendAgain = false.obs;
-  RxInt sendAgainTimer = 59.obs;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   Timer? timer;
+  RxInt sendAgainTimer = 59.obs;
 
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
@@ -41,10 +41,9 @@ class LoginScreenController extends GetxController {
     );
     EasyLoading.dismiss();
     if (result.isDone) {
+      await StorageUtils.setToken(result.data['token']);
       Get.snackbar('Hi', 'Welcome to FlashCard !');
       // FocusScope.of(context).requestFocus(FocusNode());
-      await StorageUtils.setToken(result.data['token']);
-
       // Globals.userStream.changeUser(UserModel.fromJson(
       //   result.data['user'],
       // ));
@@ -113,8 +112,22 @@ class LoginScreenController extends GetxController {
     });
   }
 
+  // void auth() async {
+  //   ApiResult result = await RequestsUtil.instance.auth.check();
+  //   if (result.isDone) {
+  //     Get.snackbar('Hi', 'Welcome to FlashCard !');
+  //     Get.offAndToNamed(Routes.home.name);
+  //     return;
+  //     // close();
+  //   } else {
+  //     Get.snackbar('Auth Error', result.data['message']);
+  //   }
+  // }
+
   @override
   void onInit() {
+    // auth();
+
     refer = Get.parameters['refer'] ?? Routes.home.name;
     print(refer);
 
@@ -125,6 +138,6 @@ class LoginScreenController extends GetxController {
     isForgot.value = false;
     isRegister.value = false;
     isLogin.value = false;
-    passwordController.clear();
+    // passwordController.clear();
   }
 }

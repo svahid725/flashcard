@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:getx_flashcard/Models/FlashCard/translate.dart';
 import 'package:getx_flashcard/Utils/routing_utils.dart';
 import 'package:getx_flashcard/Views/Splash/splash_screen.dart';
 
 
-void main() {
+void main() async {
+  await GetStorage.init();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.black,

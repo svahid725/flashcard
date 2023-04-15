@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:getx_flashcard/Controllers/Home/home_controller.dart';
@@ -31,64 +32,7 @@ class Home extends StatelessWidget {
               ),
               child: IconButton(
                   onPressed: () {
-                    Get.defaultDialog(
-                        radius: 16,
-                        title: '100 SECONDS TEST',
-                        titleStyle: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: DarkThemeColors.alertDialogTitleColor,
-                        ),
-                        titlePadding:
-                            const EdgeInsets.fromLTRB(32, 32, 142, 16),
-                        content: const Text(
-                          'Are you ready? We show 20 flashcards.Time per card: 5 seconds',
-                          style: TextStyle(
-                            fontSize: 14,
-                            height: 1.7,
-                          ),
-                        ),
-                        contentPadding: const EdgeInsets.fromLTRB(32, 0, 35, 0),
-                        actions: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 10,
-                                ),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: Text(
-                                    'Cancel',
-                                    style: Get.theme.textTheme.bodyText2!
-                                        .copyWith(fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 0, bottom: 10),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    Get.toNamed(Routes.test.name);
-                                  },
-                                  child: Text(
-                                    'Start',
-                                    style: Get.theme.textTheme.bodyText2!
-                                        .copyWith(
-                                            fontWeight: FontWeight.w700,
-                                            color: DarkThemeColors
-                                                .alertDialogTitleColor),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ]);
+                    testDialog();
                   },
                   icon: const Icon(
                     Icons.flag_outlined,
@@ -124,7 +68,11 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Obx(
               () => controller.isLoading.isTrue
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: DarkThemeColors.alertDialogTitleColor,
+                      ),
+                    )
                   : CarouselSlider.builder(
                       options: CarouselOptions(
                         padEnds: false,
@@ -200,7 +148,6 @@ class FlashCardItem extends StatelessWidget {
                   ? controller.isEnglish.value = false
                   : controller.isEnglish.value = true;
               controller.getFlashCards();
-
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -241,4 +188,71 @@ class FlashCardItem extends StatelessWidget {
       },
     );
   }
+}
+
+Future testDialog() {
+  return Get.defaultDialog(
+      radius: 16,
+      title: '',
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Text(
+            '100 SECONDS TEST',
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              color: DarkThemeColors.alertDialogTitleColor,
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            'Are you ready? We show 20 flashcards.Time per card: 5 seconds',
+            style: TextStyle(
+              fontSize: 14,
+              height: 1.7,
+            ),
+          ),
+        ],
+      ),
+      contentPadding: const EdgeInsets.fromLTRB(32, 0, 35, 0),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 10,
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: Text(
+                  'Cancel',
+                  style: Get.theme.textTheme.bodyText2!
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 0, bottom: 10),
+              child: TextButton(
+                onPressed: () {
+                  Get.back();
+                  Get.toNamed(Routes.test.name);
+                },
+                child: Text(
+                  'Start',
+                  style: Get.theme.textTheme.bodyText2!.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: DarkThemeColors.alertDialogTitleColor),
+                ),
+              ),
+            ),
+          ],
+        )
+      ]);
 }

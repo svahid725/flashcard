@@ -1,24 +1,21 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-
 
 class StorageUtils {
   static Future<String?> auth() async {
+    print('*** reading token ... ***');
     final box = GetStorage();
     return box.read(
       'token',
     );
   }
 
-  static setBgColor(String value) async {
-    final box = GetStorage();
-    return await box.write(
-      'bg',
-      value.toString(),
-    );
-  }
+  // static setBgColor(String value) async {
+  //   final box = GetStorage();
+  //   return await box.write(
+  //     'bg',
+  //     value.toString(),
+  //   );
+  // }
 
   // static Future<Color?> bgColor() async {
   //   final box = GetStorage();
@@ -32,6 +29,7 @@ class StorageUtils {
   // }
 
   static setToken(String data) async {
+    print('*** writing token ... ***');
     final box = GetStorage();
     return await box.write(
       'token',
@@ -45,5 +43,4 @@ class StorageUtils {
       'token',
     );
   }
-
 }

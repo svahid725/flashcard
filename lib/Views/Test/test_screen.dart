@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:getx_flashcard/Controllers/Home/home_controller.dart';
 import 'package:getx_flashcard/Controllers/Test/test_controller.dart';
 import 'package:getx_flashcard/Models/FlashCard/english_data_model.dart';
-import 'package:getx_flashcard/Models/FlashCard/persian_data_model.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
 import 'package:getx_flashcard/Utils/routing_utils.dart';
 import 'package:getx_flashcard/Views/AddNewFlashcard/add_new_flashcard_screen.dart';
@@ -29,7 +28,7 @@ class TestScreen extends StatelessWidget {
               ),
               height: 60,
               width: 60,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: DarkThemeColors.alertDialogTitleColor,
               ),
@@ -37,7 +36,7 @@ class TestScreen extends StatelessWidget {
                 onPressed: () {
                   Get.back();
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.flag_outlined,
                   color: Colors.black,
                 ),
@@ -396,12 +395,12 @@ class FlashCardItem extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'aaaa',
                   // controller.isEnglish.isTrue
                   //     ? CardsDataInEnglishLanguage.data[index].phrase
                   //     : controller.flashCardsPhraseList[index].toString(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontSize: 29,
                     fontWeight: FontWeight.w600,
@@ -410,13 +409,13 @@ class FlashCardItem extends StatelessWidget {
                 SizedBox(
                   height: Get.height / 36,
                 ),
-                Text(
+                const Text(
                   'sss',
                   // controller.isEnglish.isTrue
                   // ? CardsDataInEnglishLanguage.data[index].meaning
                   // : controller.flashCardsMeaningList[index].toString(),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                   ),

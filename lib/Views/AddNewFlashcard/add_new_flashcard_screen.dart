@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_flashcard/Controllers/AddNewFlashcard/add_new_flashcard_controller.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
-import 'package:getx_flashcard/Utils/routing_utils.dart';
 import 'package:getx_flashcard/Widgets/borderless_textfield.dart';
 import 'package:getx_flashcard/Widgets/my_elevated_button.dart';
 

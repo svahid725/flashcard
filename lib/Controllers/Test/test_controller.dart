@@ -4,7 +4,7 @@ class TestController extends GetxController{
   final RxBool testOn = false.obs;
 
   @override
-  void init(){
+  void onInit(){
     testOn.value = true;
     super.onInit();
   }

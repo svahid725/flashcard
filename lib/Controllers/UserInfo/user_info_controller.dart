@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:getx_flashcard/Utils/Api/project_request_utils.dart';
 import 'package:getx_flashcard/Utils/Api/storage_utils.dart';

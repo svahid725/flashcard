@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:getx_flashcard/Controllers/Home/home_controller.dart';
-import 'package:getx_flashcard/Models/FlashCard/flash_card_model.dart';
 import 'package:getx_flashcard/Utils/Api/project_request_utils.dart';
 import 'package:getx_flashcard/Utils/routing_utils.dart';
 

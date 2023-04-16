@@ -127,10 +127,8 @@ class LoginScreenController extends GetxController {
   @override
   void onInit() {
     // auth();
-
     refer = Get.parameters['refer'] ?? Routes.home.name;
-    print(refer);
-
+    // print(refer);
     super.onInit();
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:getx_flashcard/Models/FlashCard/flash_card_model.dart';
 import 'package:getx_flashcard/Utils/Api/project_request_utils.dart';
@@ -28,7 +27,7 @@ class HomeController extends GetxController {
     fetchFlashCards();
     // EasyLoading.isShow;
     Future.delayed(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       () {},
     );
     // EasyLoading.dismiss();

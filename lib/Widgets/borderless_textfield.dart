@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:getx_flashcard/Controllers/AddNewFlashcard/add_new_flashcard_controller.dart';
-import 'package:getx_flashcard/Controllers/Register/register_controller.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
 
 class BorderLessInput extends StatelessWidget {

@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:getx_flashcard/Controllers/Register/register_controller.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
 import 'package:getx_flashcard/Utils/routing_utils.dart';

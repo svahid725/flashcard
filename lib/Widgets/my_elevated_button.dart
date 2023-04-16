@@ -1,11 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_flashcard/Controllers/AddNewFlashcard/add_new_flashcard_controller.dart';
 import 'package:getx_flashcard/Utils/color_utils.dart';
 
-class MyElevatedButton extends StatelessWidget
-{
+class MyElevatedButton extends StatelessWidget {
   const MyElevatedButton({
     required this.buttonLabel,
     required this.onTap,
@@ -13,13 +10,14 @@ class MyElevatedButton extends StatelessWidget
     Key? key,
   }) : super(key: key);
   final String buttonLabel;
+
   // final GetxController controller;
   final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height / 18,
+      height: 48,
       width: Get.width - 48,
       child: ElevatedButton(
         onPressed: onTap,
@@ -30,11 +28,12 @@ class MyElevatedButton extends StatelessWidget
             ),
           ),
           backgroundColor:
-          const MaterialStatePropertyAll(DarkThemeColors.surfaceColor),
+              const MaterialStatePropertyAll(DarkThemeColors.surfaceColor),
         ),
         child: Text(
           buttonLabel,
-          style: Get.textTheme.bodyText1!.copyWith(fontWeight: FontWeight.w700,color: Colors.black),
+          style: Get.textTheme.bodyText1!
+              .copyWith(fontWeight: FontWeight.w700, color: Colors.black),
         ),
       ),
     );

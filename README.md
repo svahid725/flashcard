@@ -1,6 +1,7 @@
 # getx_flashcard
 
 A new Flutter project.
+I learned Getx and REST Api in this project.
 
 ## Getting Started
 
